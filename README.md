@@ -70,6 +70,7 @@ node scripts/update-data.mjs
 GitHub Action `.github/workflows/update-data.yml` dělá totéž denně v 15:37 UTC a commitne jen změněné soubory
 v `data/`. Ve vlastním repozitáři je třeba v *Settings → Actions → General → Workflow permissions* povolit
 „Read and write permissions“. Ručně ji spustíte v záložce *Actions* tlačítkem *Run workflow*.
+Zaškrtnutím „Stáhnout všechna data znovu (--full)“ stáhne všechna data znovu bez mezipaměti.
 
 Pokud by OTE změnil adresu nebo formát exportu, dočasně stačí jednou měsíčně ručně stáhnout data
 a spustit skript na jiném počítači. Funkce `fetchOteDay` a `parseCnbYear` jsou na začátku skriptu.

@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '37 15 * * *'   # denně 15:37 UTC (po zveřejnění výsledků denního trhu OTE a kurzu ČNB)
   workflow_dispatch:
+    inputs:
+      full:
+        description: 'Stáhnout všechna data znovu (--full)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -22,7 +27,14 @@ jobs:
         with:
           node-version: 22
       - name: Stáhnout data (OTE, ČNB, TDD)
-        run: node scripts/update-data.mjs
+        env:
+          FULL: ${{ inputs.full }}
+        run: |
+          if [ "$FULL" = "true" ]; then
+            node scripts/update-data.mjs --full
+          else
+            node scripts/update-data.mjs
+          fi
       - name: Testy
         run: node --test
       - name: Commit změněných dat
