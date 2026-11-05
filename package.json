@@ -1,0 +1,13 @@
+{
+  "name": "spot-nebo-fix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Srovnání tarifů elektřiny pro domácnost: spot, fix a dynamický tarif",
+  "type": "module",
+  "scripts": {
+    "update-data": "node scripts/update-data.mjs",
+    "test": "node --test",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

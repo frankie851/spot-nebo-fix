@@ -1,0 +1,67 @@
+{
+  "_comment": "Pásma dynamického tarifu. Ceny BEZ DPH. Pásmo platí od hodiny 'from' (včetně) do 'to' (vyjma), v lokálním čase. 'pct' je odchylka od základní ceny v %. Víkendová pásma platí i ve státní svátky. Pro jiného dodavatele přidejte další položku do 'products'.",
+  "default": "cez-dynamicky-2026-06",
+  "products": {
+    "cez-dynamicky-2026-06": {
+      "supplier": "ČEZ Prodej",
+      "product": "Dynamický tarif (smlouva na dobu neurčitou)",
+      "source": "https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_cez_dynamicky_tarif_01062026_012026.pdf",
+      "validFrom": "2026-06-01",
+      "basePrice": { "value": 3223.14, "unit": "Kč/MWh bez DPH", "note": "3 900 Kč/MWh vč. DPH; pásma 1 950 / 3 510 / 4 290 / 4 875 Kč/MWh vč. DPH odpovídají −50 / −10 / +10 / +25 %" },
+      "monthlyFee": { "value": 135.0, "unit": "Kč/měsíc bez DPH", "note": "Stálá platba, ř. 2 ceníku (163,35 Kč vč. DPH)" },
+      "conditions": "Vyžaduje průběhové měření (chytrý elektroměr). Distribuční VT/NT se nemění.",
+      "seasons": {
+        "summer": {
+          "months": [4, 5, 6, 7, 8, 9],
+          "workday": [
+            { "from": 0, "to": 3, "pct": -10 },
+            { "from": 3, "to": 5, "pct": -50 },
+            { "from": 5, "to": 8, "pct": 25 },
+            { "from": 8, "to": 11, "pct": 10 },
+            { "from": 11, "to": 14, "pct": -50 },
+            { "from": 14, "to": 16, "pct": 10 },
+            { "from": 16, "to": 18, "pct": -10 },
+            { "from": 18, "to": 20, "pct": 25 },
+            { "from": 20, "to": 23, "pct": 10 },
+            { "from": 23, "to": 24, "pct": -10 }
+          ],
+          "weekend": [
+            { "from": 0, "to": 3, "pct": -10 },
+            { "from": 3, "to": 5, "pct": -50 },
+            { "from": 5, "to": 11, "pct": 10 },
+            { "from": 11, "to": 14, "pct": -50 },
+            { "from": 14, "to": 16, "pct": 10 },
+            { "from": 16, "to": 18, "pct": -10 },
+            { "from": 18, "to": 23, "pct": 10 },
+            { "from": 23, "to": 24, "pct": -10 }
+          ]
+        },
+        "winter": {
+          "months": [1, 2, 3, 10, 11, 12],
+          "workday": [
+            { "from": 0, "to": 3, "pct": -10 },
+            { "from": 3, "to": 5, "pct": -50 },
+            { "from": 5, "to": 8, "pct": 25 },
+            { "from": 8, "to": 11, "pct": 10 },
+            { "from": 11, "to": 14, "pct": -10 },
+            { "from": 14, "to": 16, "pct": 10 },
+            { "from": 16, "to": 18, "pct": -10 },
+            { "from": 18, "to": 20, "pct": 25 },
+            { "from": 20, "to": 23, "pct": 10 },
+            { "from": 23, "to": 24, "pct": -10 }
+          ],
+          "weekend": [
+            { "from": 0, "to": 3, "pct": -10 },
+            { "from": 3, "to": 5, "pct": -50 },
+            { "from": 5, "to": 11, "pct": 10 },
+            { "from": 11, "to": 14, "pct": -10 },
+            { "from": 14, "to": 16, "pct": 10 },
+            { "from": 16, "to": 18, "pct": -10 },
+            { "from": 18, "to": 23, "pct": 10 },
+            { "from": 23, "to": 24, "pct": -10 }
+          ]
+        }
+      }
+    }
+  }
+}

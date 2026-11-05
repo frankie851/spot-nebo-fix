@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spot, nebo fix?</title>
+  <meta name="description" content="Srovnání ročních nákladů na elektřinu pro domácnost: spot, fixní cena a dynamický tarif na skutečných cenách posledních 12 měsíců.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Spot, nebo fix?</h1>
+      <p class="lead">Kolik byste za posledních 12 měsíců zaplatili za elektřinu se spotovou cenou, s fixní cenou a s dynamickým tarifem. Počítáno na skutečných cenách denního trhu OTE.</p>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <form id="form" class="panel form" autocomplete="off" novalidate>
+      <h2>Vaše odběrné místo</h2>
+
+      <label class="field">
+        <span>Typ domácnosti</span>
+        <select id="household">
+          <option value="flat">Byt</option>
+          <option value="house" selected>Rodinný dům</option>
+          <option value="heatpump">Dům s tepelným čerpadlem</option>
+          <option value="pv">Dům s fotovoltaikou</option>
+        </select>
+        <small class="hint" id="household-hint">Typ předvyplní sazbu, spotřebu a jistič. Průběh spotřeby (TDD) se řídí sazbou.</small>
+      </label>
+
+      <div class="row2">
+        <label class="field">
+          <span>Distributor</span>
+          <select id="distributor"></select>
+        </label>
+        <label class="field">
+          <span>Distribuční sazba</span>
+          <select id="sazba"></select>
+        </label>
+      </div>
+
+      <label class="field" id="region-field" hidden>
+        <span>Region (pro TDD akumulace)</span>
+        <select id="region"></select>
+      </label>
+
+      <div class="row2">
+        <label class="field">
+          <span>Roční spotřeba (MWh)</span>
+          <input id="mwh" type="number" inputmode="decimal" min="0.1" max="100" step="0.1" value="3.5">
+        </label>
+        <label class="field">
+          <span>Hlavní jistič</span>
+          <select id="breaker"></select>
+        </label>
+      </div>
+
+      <fieldset class="offers">
+        <legend>Nabídky dodavatelů <span class="muted">(vč. DPH)</span></legend>
+        <label class="field">
+          <span>Fixní cena silové elektřiny (Kč/MWh)</span>
+          <input id="fixPrice" type="number" inputmode="decimal" min="0" step="10" value="3500">
+        </label>
+        <label class="field">
+          <span>Marže spotu (Kč/MWh)</span>
+          <input id="spotMargin" type="number" inputmode="decimal" min="0" step="10" value="400">
+        </label>
+        <small class="hint">Předvyplněno orientačně. Zadejte čísla z nabídky, kterou zvažujete.</small>
+      </fieldset>
+
+      <details class="more">
+        <summary>Další nastavení</summary>
+        <label class="field">
+          <span>Stálá platba dodavatele – fix (Kč/měsíc)</span>
+          <input id="fixFee" type="number" inputmode="decimal" min="0" step="1" value="163.35">
+        </label>
+        <label class="field">
+          <span>Stálá platba dodavatele – spot (Kč/měsíc)</span>
+          <input id="spotFee" type="number" inputmode="decimal" min="0" step="1" value="163.35">
+        </label>
+        <label class="field">
+          <span>Dynamický tarif – základní cena (Kč/MWh)</span>
+          <input id="dynBase" type="number" inputmode="decimal" min="0" step="10">
+        </label>
+        <label class="field">
+          <span>Dynamický tarif – stálá platba (Kč/měsíc)</span>
+          <input id="dynFee" type="number" inputmode="decimal" min="0" step="1">
+        </label>
+      </details>
+
+      <details class="more" id="csv-box">
+        <summary>Vlastní průběhové měření (CSV)</summary>
+        <p class="hint">Soubor ze zákaznického portálu distributora (čtvrthodinová nebo hodinová data). Zpracuje se jen ve vašem prohlížeči a nikam se neodesílá.</p>
+        <input id="csvFile" type="file" accept=".csv,.txt,text/csv">
+        <div id="csv-map" hidden>
+          <div class="row2">
+            <label class="field"><span>Sloupec s časem</span><select id="csvTime"></select></label>
+            <label class="field"><span>Sloupec se spotřebou</span><select id="csvValue"></select></label>
+          </div>
+          <div class="row2">
+            <label class="field"><span>Jednotka</span>
+              <select id="csvUnit"><option value="kWh">kWh za interval</option><option value="kW">kW (průměrný výkon)</option></select>
+            </label>
+            <label class="field"><span>Čas v souboru je</span>
+              <select id="csvEnd"><option value="1">konec intervalu</option><option value="0">začátek intervalu</option></select>
+            </label>
+          </div>
+          <div class="btns">
+            <button type="button" id="csvApply" class="btn">Použít měření</button>
+            <button type="button" id="csvClear" class="btn btn-ghost">Zpět na TDD</button>
+          </div>
+        </div>
+        <p id="csv-status" class="status" role="status"></p>
+      </details>
+    </form>
+
+    <section class="results" aria-live="polite">
+      <div class="panel">
+        <div class="results-head">
+          <h2>Roční náklady</h2>
+          <span class="badge">vč. DPH 21 %</span>
+        </div>
+        <p id="summary" class="summary">Načítám data…</p>
+        <div class="cards" id="cards"></div>
+
+        <div class="shift">
+          <label for="shift" class="shift-label">
+            Přesun spotřeby do nejlevnějších hodin dne: <strong id="shift-out">0 %</strong>
+          </label>
+          <input id="shift" type="range" min="0" max="30" step="5" value="0">
+          <small class="hint">Platí pro spot a dynamický tarif (např. pračka, ohřev vody nebo nabíjení auta v levných hodinách). Roční spotřeba se nemění.</small>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Náklady po měsících <span class="muted">(Kč vč. DPH)</span></h2>
+        <div class="chart"><canvas id="chart-monthly" aria-label="Graf měsíčních nákladů ve třech variantách" role="img"></canvas></div>
+      </div>
+
+      <div class="panel">
+        <h2>Kdy je elektřina levná a kdy ji spotřebováváte</h2>
+        <p class="hint">Průměrná cena denního trhu podle hodiny dne (Kč/MWh bez DPH a marže) a podíl vaší spotřeby v dané hodině.</p>
+        <div class="chart"><canvas id="chart-hourly" aria-label="Graf průměrné spotové ceny podle hodiny dne a profilu spotřeby" role="img"></canvas></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclaimer"><strong>Orientační výpočet, nejde o nabídku dodavatele.</strong> Všechny částky jsou včetně DPH 21 %.</p>
+      <p id="data-date"></p>
+      <h3>Zjednodušení</h3>
+      <ul id="simplifications">
+        <li>Spotřeba po čtvrthodinách = roční spotřeba × normalizovaný typový diagram dodávky (TDD) OTE pro třídu sazby, <strong>bez teplotního přepočtu</strong>.</li>
+        <li>Časy nízkého tarifu (HDO) určuje distributor individuálně; výpočet používá typická okna podle sazby.</li>
+        <li>Distribuce, poplatky a ceník dynamického tarifu jsou podle cen platných v roce 2026 a jsou použity na celé období, i na měsíce roku 2025.</li>
+        <li>Spot počítá s 15minutovou cenou denního trhu OTE a kurzem ČNB vyhlášeným pro den dodávky (o víkendu a svátcích poslední vyhlášený). Dodavatelé mohou spot účtovat jinak (např. hodinovým průměrem nebo s poplatkem za odchylky).</li>
+        <li>Posun spotřeby: zvolený podíl spotřeby každého dne se přesune rovným dílem do 4 nejlevnějších hodin téhož dne.</li>
+        <li>U domácnosti s fotovoltaikou zadejte jen spotřebu odebranou ze sítě; výroba FVE ani prodej přetoků se nemodelují (profil TDD4).</li>
+        <li>Dynamický tarif ČEZ vyžaduje průběhové měření. Jističe nad 3× 63 A, slevy a bonusy dodavatelů nejsou zahrnuty.</li>
+      </ul>
+      <h3>Zdroje</h3>
+      <ul id="sources">
+        <li><a href="https://www.ote-cr.cz/cs/kratkodobe-trhy/elektrina/denni-trh" rel="noopener">OTE – výsledky denního trhu s elektřinou</a></li>
+        <li><a href="https://www.ote-cr.cz/cs/statistika/typove-diagramy-dodavek-elektriny/normalizovane-tdd" rel="noopener">OTE – normalizované typové diagramy dodávek</a></li>
+        <li><a href="https://www.cnb.cz/cs/financni-trhy/devizovy-trh/kurzy-devizoveho-trhu/" rel="noopener">ČNB – kurzy devizového trhu</a></li>
+        <li><a href="https://eru.gov.cz/cenove-vymery" rel="noopener">ERÚ – cenové výměry (systémové služby, POZE, nesíťová infrastruktura)</a></li>
+        <li><a href="https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_cez_dynamicky_tarif_01062026_012026.pdf" rel="noopener">ČEZ Prodej – ceník Dynamický tarif (pásma; distribuce ČEZ Distribuce)</a>,
+          <a href="https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_egd_dynamicky_tarif_01062026_012026.pdf" rel="noopener">území EG.D</a>,
+          <a href="https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_pre_dynamicky_tarif_01062026_012026.pdf" rel="noopener">území PREdistribuce</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

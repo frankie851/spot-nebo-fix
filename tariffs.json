@@ -1,0 +1,872 @@
+{
+  "_comment": "Všechny ceny jsou BEZ DPH (v ceníku v závorce). DPH se přičítá ve výpočtu. Návod na aktualizaci je v README.",
+  "year": 2026,
+  "vat": {
+    "value": 0.21,
+    "source": "Zákon č. 235/2004 Sb., o dani z přidané hodnoty – základní sazba 21 %",
+    "year": 2026
+  },
+  "common": {
+    "electricityTax": {
+      "value": 28.3,
+      "unit": "Kč/MWh",
+      "source": "Zákon č. 261/2007 Sb., část 47 (daň z elektřiny); ceník ČEZ Prodej ř. 20",
+      "year": 2026
+    },
+    "systemServices": {
+      "value": 164.24,
+      "unit": "Kč/MWh",
+      "source": "Cenový výměr ERÚ č. 13/2025, bod (3.1), Energetický regulační věstník 17/2025",
+      "url": "https://eru.gov.cz/sites/default/files/obsah/prilohy/erv172025.pdf",
+      "year": 2026
+    },
+    "nonNetworkInfra": {
+      "value": 12.87,
+      "unit": "Kč/měsíc",
+      "source": "Cenový výměr ERÚ č. 13/2025, bod (6) (OTE, datové centrum, poplatek ERÚ); ceník ČEZ Prodej ř. 22",
+      "url": "https://eru.gov.cz/sites/default/files/obsah/prilohy/erv172025.pdf",
+      "year": 2026
+    },
+    "poze": {
+      "perMWh": 495,
+      "perAmpPhase": 0,
+      "unit": "Kč/MWh nebo Kč/A/fáze/měsíc – účtuje se nižší z obou",
+      "source": "Cenový výměr ERÚ č. 15/2025 (ERV 19/2025); ceník ČEZ Prodej ř. 23–24",
+      "url": "https://eru.gov.cz/sites/default/files/obsah/prilohy/erv192025.pdf",
+      "year": 2026
+    }
+  },
+  "breakers": [
+    {
+      "id": "1x25",
+      "label": "1× 25 A",
+      "phases": 1,
+      "amps": 25,
+      "tier": "3x10|1x25"
+    },
+    {
+      "id": "3x10",
+      "label": "3× 10 A",
+      "phases": 3,
+      "amps": 10,
+      "tier": "3x10|1x25"
+    },
+    {
+      "id": "3x16",
+      "label": "3× 16 A",
+      "phases": 3,
+      "amps": 16,
+      "tier": "3x16"
+    },
+    {
+      "id": "3x20",
+      "label": "3× 20 A",
+      "phases": 3,
+      "amps": 20,
+      "tier": "3x20"
+    },
+    {
+      "id": "3x25",
+      "label": "3× 25 A",
+      "phases": 3,
+      "amps": 25,
+      "tier": "3x25"
+    },
+    {
+      "id": "3x32",
+      "label": "3× 32 A",
+      "phases": 3,
+      "amps": 32,
+      "tier": "3x32"
+    },
+    {
+      "id": "3x40",
+      "label": "3× 40 A",
+      "phases": 3,
+      "amps": 40,
+      "tier": "3x40"
+    },
+    {
+      "id": "3x50",
+      "label": "3× 50 A",
+      "phases": 3,
+      "amps": 50,
+      "tier": "3x50"
+    },
+    {
+      "id": "3x63",
+      "label": "3× 63 A",
+      "phases": 3,
+      "amps": 63,
+      "tier": "3x63"
+    }
+  ],
+  "sazbyInfo": {
+    "D01d": {
+      "label": "D01d – jednotarif, malá spotřeba",
+      "tdd": "TDD4"
+    },
+    "D02d": {
+      "label": "D02d – jednotarif, střední spotřeba",
+      "tdd": "TDD4"
+    },
+    "D25d": {
+      "label": "D25d – dvoutarif, akumulace 8 h",
+      "tdd": "TDD5"
+    },
+    "D26d": {
+      "label": "D26d – dvoutarif, akumulace 8 h (vyšší příkon)",
+      "tdd": "TDD5"
+    },
+    "D27d": {
+      "label": "D27d – dvoutarif, elektromobilita",
+      "tdd": "TDD5"
+    },
+    "D35d": {
+      "label": "D35d – akumulace 16 h",
+      "tdd": "TDD6"
+    },
+    "D45d": {
+      "label": "D45d – přímotop 20 h",
+      "tdd": "TDD6"
+    },
+    "D56d": {
+      "label": "D56d – tepelné čerpadlo 22 h",
+      "tdd": "TDD6"
+    },
+    "D57d": {
+      "label": "D57d – elektrické topení 20 h",
+      "tdd": "TDD6"
+    },
+    "D61d": {
+      "label": "D61d – víkendová",
+      "tdd": "TDD7"
+    }
+  },
+  "ntHours": {
+    "_comment": "Zjednodušení: skutečné časy NT určuje distributor (HDO) individuálně. Zde typická okna v lokálních hodinách [od, do). Zdroj délky NT: podmínky distribučních sazeb (vyhláška ERÚ 408/2015 Sb. a ceníky distributorů).",
+    "D25d": {
+      "workday": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ]
+    },
+    "D26d": {
+      "workday": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ]
+    },
+    "D27d": {
+      "workday": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          6
+        ],
+        [
+          13,
+          15
+        ]
+      ]
+    },
+    "D35d": {
+      "workday": [
+        [
+          0,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          21,
+          24
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          7
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          21,
+          24
+        ]
+      ]
+    },
+    "D45d": {
+      "workday": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          21,
+          24
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          21,
+          24
+        ]
+      ]
+    },
+    "D56d": {
+      "workday": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          17
+        ],
+        [
+          18,
+          24
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          17
+        ],
+        [
+          18,
+          24
+        ]
+      ]
+    },
+    "D57d": {
+      "workday": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          21,
+          24
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          21,
+          24
+        ]
+      ]
+    },
+    "D61d": {
+      "workday": [
+        [
+          0,
+          6
+        ],
+        [
+          22,
+          24
+        ]
+      ],
+      "weekend": [
+        [
+          0,
+          24
+        ]
+      ]
+    }
+  },
+  "tdd5RegionLabels": {
+    "JC": "Jižní Čechy",
+    "JM": "Jižní Morava",
+    "P": "Praha",
+    "SC": "Severní Čechy",
+    "SM": "Severní Morava",
+    "STC": "Střední Čechy",
+    "VC": "Východní Čechy",
+    "ZC": "Západní Čechy"
+  },
+  "distributors": {
+    "cez": {
+      "name": "ČEZ Distribuce",
+      "tdd5Regions": [
+        "SC",
+        "SM",
+        "STC",
+        "VC",
+        "ZC"
+      ],
+      "source": {
+        "title": "Ceník ČEZ Prodej – Dynamický tarif, distribuční území ČEZ Distribuce (distribuční část ceny, ř. 3–12)",
+        "url": "https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_cez_dynamicky_tarif_01062026_012026.pdf",
+        "validFrom": "2026-01-01",
+        "year": 2026
+      },
+      "sazby": {
+        "D01d": {
+          "vt": 2666.66,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 50,
+            "3x16": 79,
+            "3x20": 99,
+            "3x25": 124,
+            "3x32": 158,
+            "3x40": 198,
+            "3x50": 248,
+            "3x63": 312
+          }
+        },
+        "D02d": {
+          "vt": 2078.58,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 102,
+            "3x16": 164,
+            "3x20": 205,
+            "3x25": 256,
+            "3x32": 327,
+            "3x40": 409,
+            "3x50": 512,
+            "3x63": 644
+          }
+        },
+        "D25d": {
+          "vt": 2252.45,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 107,
+            "3x16": 172,
+            "3x20": 215,
+            "3x25": 269,
+            "3x32": 344,
+            "3x40": 430,
+            "3x50": 537,
+            "3x63": 677
+          }
+        },
+        "D26d": {
+          "vt": 1202.06,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 145,
+            "3x16": 231,
+            "3x20": 289,
+            "3x25": 362,
+            "3x32": 463,
+            "3x40": 578,
+            "3x50": 723,
+            "3x63": 911
+          }
+        },
+        "D27d": {
+          "vt": 2252.45,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 102,
+            "3x16": 163,
+            "3x20": 204,
+            "3x25": 255,
+            "3x32": 326,
+            "3x40": 408,
+            "3x50": 510,
+            "3x63": 643
+          }
+        },
+        "D35d": {
+          "vt": 754.77,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 222,
+            "3x16": 355,
+            "3x20": 444,
+            "3x25": 555,
+            "3x32": 710,
+            "3x40": 888,
+            "3x50": 1110,
+            "3x63": 1399
+          }
+        },
+        "D45d": {
+          "vt": 754.77,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 222,
+            "3x16": 355,
+            "3x20": 444,
+            "3x25": 555,
+            "3x32": 710,
+            "3x40": 888,
+            "3x50": 1110,
+            "3x63": 1399
+          }
+        },
+        "D56d": {
+          "vt": 754.77,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 222,
+            "3x16": 355,
+            "3x20": 444,
+            "3x25": 555,
+            "3x32": 710,
+            "3x40": 888,
+            "3x50": 1110,
+            "3x63": 1399
+          }
+        },
+        "D57d": {
+          "vt": 754.77,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 222,
+            "3x16": 355,
+            "3x20": 444,
+            "3x25": 555,
+            "3x32": 710,
+            "3x40": 896,
+            "3x50": 1289,
+            "3x63": 1949
+          }
+        },
+        "D61d": {
+          "vt": 3306.67,
+          "nt": 116.5,
+          "breaker": {
+            "3x10|1x25": 89,
+            "3x16": 143,
+            "3x20": 179,
+            "3x25": 224,
+            "3x32": 286,
+            "3x40": 358,
+            "3x50": 447,
+            "3x63": 563
+          }
+        }
+      }
+    },
+    "egd": {
+      "name": "EG.D",
+      "tdd5Regions": [
+        "JM",
+        "JC"
+      ],
+      "source": {
+        "title": "Ceník ČEZ Prodej – Dynamický tarif, distribuční území EG.D (distribuční část ceny, ř. 3–12)",
+        "url": "https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_egd_dynamicky_tarif_01062026_012026.pdf",
+        "validFrom": "2026-01-01",
+        "year": 2026
+      },
+      "sazby": {
+        "D01d": {
+          "vt": 2711.14,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 48,
+            "3x16": 77,
+            "3x20": 96,
+            "3x25": 120,
+            "3x32": 154,
+            "3x40": 192,
+            "3x50": 240,
+            "3x63": 302
+          }
+        },
+        "D02d": {
+          "vt": 2295.34,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 100,
+            "3x16": 160,
+            "3x20": 200,
+            "3x25": 250,
+            "3x32": 320,
+            "3x40": 400,
+            "3x50": 500,
+            "3x63": 629
+          }
+        },
+        "D25d": {
+          "vt": 2243.88,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 98,
+            "3x16": 157,
+            "3x20": 196,
+            "3x25": 245,
+            "3x32": 314,
+            "3x40": 392,
+            "3x50": 491,
+            "3x63": 618
+          }
+        },
+        "D26d": {
+          "vt": 1237.94,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 140,
+            "3x16": 223,
+            "3x20": 279,
+            "3x25": 349,
+            "3x32": 446,
+            "3x40": 558,
+            "3x50": 698,
+            "3x63": 879
+          }
+        },
+        "D27d": {
+          "vt": 2243.88,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 93,
+            "3x16": 149,
+            "3x20": 187,
+            "3x25": 233,
+            "3x32": 299,
+            "3x40": 373,
+            "3x50": 467,
+            "3x63": 588
+          }
+        },
+        "D35d": {
+          "vt": 749.87,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 190,
+            "3x16": 304,
+            "3x20": 380,
+            "3x25": 475,
+            "3x32": 608,
+            "3x40": 760,
+            "3x50": 950,
+            "3x63": 1196
+          }
+        },
+        "D45d": {
+          "vt": 749.87,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 190,
+            "3x16": 304,
+            "3x20": 380,
+            "3x25": 475,
+            "3x32": 608,
+            "3x40": 760,
+            "3x50": 950,
+            "3x63": 1196
+          }
+        },
+        "D56d": {
+          "vt": 749.87,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 190,
+            "3x16": 304,
+            "3x20": 380,
+            "3x25": 475,
+            "3x32": 608,
+            "3x40": 760,
+            "3x50": 950,
+            "3x63": 1196
+          }
+        },
+        "D57d": {
+          "vt": 749.87,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 189,
+            "3x16": 302,
+            "3x20": 378,
+            "3x25": 473,
+            "3x32": 605,
+            "3x40": 764,
+            "3x50": 1098,
+            "3x63": 1619
+          }
+        },
+        "D61d": {
+          "vt": 3367.23,
+          "nt": 224.3,
+          "breaker": {
+            "3x10|1x25": 90,
+            "3x16": 144,
+            "3x20": 179,
+            "3x25": 224,
+            "3x32": 287,
+            "3x40": 359,
+            "3x50": 449,
+            "3x63": 565
+          }
+        }
+      }
+    },
+    "pre": {
+      "name": "PREdistribuce",
+      "tdd5Regions": [
+        "P"
+      ],
+      "source": {
+        "title": "Ceník ČEZ Prodej – Dynamický tarif, distribuční území PREdistribuce (distribuční část ceny, ř. 3–12)",
+        "url": "https://www.cez.cz/webpublic/file/edee/ceniky/moo_ele_pre_dynamicky_tarif_01062026_012026.pdf",
+        "validFrom": "2026-01-01",
+        "year": 2026
+      },
+      "sazby": {
+        "D01d": {
+          "vt": 1854.71,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 44,
+            "3x16": 70,
+            "3x20": 88,
+            "3x25": 110,
+            "3x32": 140,
+            "3x40": 175,
+            "3x50": 219,
+            "3x63": 276
+          }
+        },
+        "D02d": {
+          "vt": 1516.53,
+          "nt": null,
+          "breaker": {
+            "3x10|1x25": 87,
+            "3x16": 139,
+            "3x20": 173,
+            "3x25": 217,
+            "3x32": 277,
+            "3x40": 347,
+            "3x50": 434,
+            "3x63": 546
+          }
+        },
+        "D25d": {
+          "vt": 1656.49,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 80,
+            "3x16": 128,
+            "3x20": 160,
+            "3x25": 200,
+            "3x32": 256,
+            "3x40": 320,
+            "3x50": 401,
+            "3x63": 505
+          }
+        },
+        "D26d": {
+          "vt": 1009.35,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 110,
+            "3x16": 175,
+            "3x20": 219,
+            "3x25": 274,
+            "3x32": 350,
+            "3x40": 438,
+            "3x50": 548,
+            "3x63": 690
+          }
+        },
+        "D27d": {
+          "vt": 1656.49,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 76,
+            "3x16": 122,
+            "3x20": 152,
+            "3x25": 191,
+            "3x32": 244,
+            "3x40": 305,
+            "3x50": 381,
+            "3x63": 480
+          }
+        },
+        "D35d": {
+          "vt": 421.52,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 154,
+            "3x16": 246,
+            "3x20": 308,
+            "3x25": 385,
+            "3x32": 492,
+            "3x40": 616,
+            "3x50": 770,
+            "3x63": 970
+          }
+        },
+        "D45d": {
+          "vt": 421.52,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 154,
+            "3x16": 246,
+            "3x20": 308,
+            "3x25": 385,
+            "3x32": 492,
+            "3x40": 616,
+            "3x50": 770,
+            "3x63": 970
+          }
+        },
+        "D56d": {
+          "vt": 421.52,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 154,
+            "3x16": 246,
+            "3x20": 308,
+            "3x25": 385,
+            "3x32": 492,
+            "3x40": 616,
+            "3x50": 770,
+            "3x63": 970
+          }
+        },
+        "D57d": {
+          "vt": 421.52,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 154,
+            "3x16": 246,
+            "3x20": 308,
+            "3x25": 385,
+            "3x32": 492,
+            "3x40": 622,
+            "3x50": 933,
+            "3x63": 1433
+          }
+        },
+        "D61d": {
+          "vt": 2343.05,
+          "nt": 175.2,
+          "breaker": {
+            "3x10|1x25": 64,
+            "3x16": 103,
+            "3x20": 128,
+            "3x25": 161,
+            "3x32": 205,
+            "3x40": 257,
+            "3x50": 321,
+            "3x63": 404
+          }
+        }
+      }
+    }
+  }
+}

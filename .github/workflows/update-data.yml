@@ -1,0 +1,38 @@
+name: Aktualizace dat
+
+on:
+  schedule:
+    - cron: '37 15 * * *'   # denně 15:37 UTC (po zveřejnění výsledků denního trhu OTE a kurzu ČNB)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Stáhnout data (OTE, ČNB, TDD)
+        run: node scripts/update-data.mjs
+      - name: Testy
+        run: node --test
+      - name: Commit změněných dat
+        run: |
+          if git diff --quiet -- data; then
+            echo "Data beze změny."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -m "Aktualizace dat $(date -u +%Y-%m-%d)"
+          git push
